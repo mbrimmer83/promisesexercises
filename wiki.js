@@ -6,17 +6,14 @@ var Page = mongoose.model('Page', {
   content: String
 });
 
-Page.findById('HomePage', function(err, page) {
-  if (err) {
+Page.findById('HomePage')
+  .them(function(page) {
+    page.content = 'Welcome to my grand wiki!';
+    return page.save();
+  })
+  .then(function(page){
+      console.log('Success!');
+  })
+  .catch(function(err){
     console.error(err.message);
-    return;
-  }
-  page.content = 'Welcome to my grand wiki!';
-  page.save(function(err) {
-    if (err) {
-      console.error(err.message);
-      return;
-    }
-    console.log('Success!');
   });
-});
